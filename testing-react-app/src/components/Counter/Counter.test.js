@@ -1,27 +1,44 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
-import Counter from './index'
-
-test("increase btn", () => {
-    render(<Counter/>);
-
-    const count = screen.getByText("0");
-    const increaseBtn = screen.getByText("Increase");
-
-    userEvent.click(increaseBtn);
-    expect(count).toHaveTextContent("1");
+import Counter from './index';
 
 
-});
+describe('Counter Test', () => {
+    let increaseBtn, decreaseBtn, count;
 
-test("decrease btn", () => {
-    render(<Counter/>);
+    beforeEach(() => {
+        console.log("Her testten önce çalışır")
+        render(<Counter />);
+        increaseBtn = screen.getByText("Increase");
+        decreaseBtn = screen.getByText("Decrease");
+        count = screen.getByText("0");
 
-    const count = screen.getByText("0");
-    const decreaseBtn = screen.getByText("Decrease");
+    });
 
-    userEvent.click(decreaseBtn);
-    expect(count).toHaveTextContent("-1");
+    beforeAll(() => {
+        console.log("İlk başta bir kere çalışır")
+
+    });
+
+    afterEach(() => {
+        console.log("Her testten sonra çalışır")
+    });
+
+    afterAll(() => {
+        console.log("En son bir kere çalışır")
+
+    });
+
+    test("increase btn", () => {
+        userEvent.click(increaseBtn);
+        expect(count).toHaveTextContent("1");
+    });
+
+    test("decrease btn", () => {
+        userEvent.click(decreaseBtn);
+        expect(count).toHaveTextContent("-1");
+    });
+
+})
 
 
-});
